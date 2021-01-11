@@ -44,6 +44,13 @@ rolling_ewm_corr_simp = df1.ewm(min_periods=window_size, alpha=0.97).corr(df2)
 print(rolling_ewm_corr_simp)
 
 #Simplified further
-rolling_ewm_corr_ult_simp = df1.ewm(span=window_size).corr(df2)
+rolling_ewm_corr_span = df1.ewm(span=window_size).corr(df2)
 
-print(rolling_ewm_corr_ult_simp)
+print(rolling_ewm_corr_span)
+
+#transform the correlation dataframe for whatever reason
+discount_factor = 0.97
+for i in range(0, len(rolling_ewm_corr_span.index)):
+    rolling_ewm_corr_span[i] *= discount_factor ** (i-1)
+
+print(rolling_ewm_corr_span)
